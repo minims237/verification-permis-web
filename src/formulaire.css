@@ -1,0 +1,23 @@
+.contener{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.groupInput{
+    display: flex;
+    flex-direction: column;
+}
+.champInput{
+    max-width: 653px;
+     min-height: 40px;
+     border-radius: 8px;
+     padding-left: 15px;
+ }
+ .labelSpace{
+    padding-top: 25px;
+    padding-bottom: 15px;
+}
+.bns{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

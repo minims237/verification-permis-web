@@ -1,0 +1,1 @@
+export const GRAPHQL_API_URL="https://intense-journey-46058.herokuapp.com/graphql";
