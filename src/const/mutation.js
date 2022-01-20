@@ -7,7 +7,7 @@ export const NEWUSER = gql`
     $date1: String!
     $date2: String!
     $date3: String!
-    $photo: String!
+    $photo: Upload
   ) {
     NewUsert(
     nom:$nom

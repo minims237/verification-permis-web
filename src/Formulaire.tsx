@@ -1,14 +1,21 @@
 import { inject, observer } from "mobx-react";
-import { Component } from "react";
+import { ChangeEvent, Component } from "react";
 import { Button, Form } from "react-bootstrap";
 import "./formulaire.css";
+import { CreateUserStore } from "./stores/CreateUser.store";
 import { UsersStore } from "./stores/user.store";
+import tof from "../src/const/m.jpeg";
+import axios from "axios";
 interface MyProps {
-userStore?:UsersStore
+  userStore?: UsersStore;
+  createUserStore?: CreateUserStore;
 }
-@inject('userStore')
+@inject("userStore", "createUserStore")
 @observer
 class Formulaire extends Component<MyProps> {
+  async componentDidMount() {
+    await this.props.userStore!.getUsers();
+  }
   state = {
     nom: "",
     categorie: "",
@@ -16,38 +23,63 @@ class Formulaire extends Component<MyProps> {
     date1: "a",
     date2: "",
     date3: "",
-    photo: "",
-    user:this.props.userStore!.users,
+    photo: tof,
+    user: this.props.userStore!.users,
+    fileSelected: null,
   };
-  componentDidMount=async()=>{
-  
-    let promess = new Promise((resolve,reject)=>{
-      resolve(  this.props.userStore!.getUsers())
-    })
-  } 
 
-  handleChange(event: any) {
-    this.setState({
-      nom: event.target.value,
-    });
-
-    
+  onFileChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+    this.setState({ photo: event.target.baseURI });
   }
-  async save(){
-   await this.props.userStore!.NewUser(
-     this.state.nom,
-     this.state.categorie,
-     this.state.statut,
-     this.state.date1,
-     this.state.date2,
-     this.state.date3,
-     this.state.photo
-   )
+  handUpload() {
+    let file = this.state.photo;
+    let formdata = new FormData();
+    formdata.append("image", file);
+    formdata.append("name", "photo de profil");
+
+    axios({
+      url: `/some/api`,
+      method: "POST",
+      headers: {
+        authorization: `your token`,
+      },
+      data: formdata,
+    }).then(
+      (res) => {},
+      (err) => {}
+    );
+  }
+  async save() {
+    console.log("envoie des donnees");
+    this.handUpload();
+    await this.props.createUserStore!.NewUser(
+      this.state.nom,
+      this.state.categorie,
+      this.state.statut,
+      this.state.date1,
+      this.state.date2,
+      this.state.date3,
+      this.state.photo
+    );
+    console.log("fin");
   }
   render() {
     return (
       <div className="contener">
         <Form>
+          <Form.Group className="mb-3">
+            {this.props.userStore!.users.map((item: any) => (
+              <div>
+                <table className="table">
+                  <tr className="tr">
+                    <td>rien</td>
+                    <td>{item.nom}</td>
+                  </tr>
+                </table>
+                <p></p>
+              </div>
+            ))}
+          </Form.Group>
           <Form.Group className="mb-3">
             <div className="groupInput">
               <Form.Label className="labelSpace">Nom complet</Form.Label>
@@ -125,22 +157,28 @@ class Formulaire extends Component<MyProps> {
               <Form.Control
                 type="file"
                 className="champInput"
-                onChange={(event) =>
-                  this.setState({ photo: event.target.value })
-                }
+                onChange={(e) => this.onFileChange(e)}
               ></Form.Control>
             </div>
           </Form.Group>
           <Form.Group className="mb-3">
-            {
-              console.log(this.state.categorie,this.state.nom,this.state.photo, this.state.date1,"la valeur du npm",this.state.user,)
-            }
+            {console.log(
+              this.state.categorie,
+              this.state.nom,
+              this.state.photo,
+              this.state.date1,
+              "la valeur du npm",
+              this.state.user.nom
+            )}
             <div className="groupInput">
-              <Button className="champInput bns" variant="primary" onClick={()=>{
-                return this.save();
-              }}>
+              <Button
+                className="champInput bns"
+                variant="primary"
+                onClick={() => {
+                  this.save();
+                }}
+              >
                 enregistre{" "}
-
               </Button>
             </div>
           </Form.Group>
