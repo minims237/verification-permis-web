@@ -12,9 +12,9 @@ export class CreateUserStore {
     @action setUsers(users:any){
         this.users = users
     }
-    @action async NewUser(nom: any,categorie: any,statut: any,date1: any,date2: any,date3: any,photo: any){
+    @action async NewUser(nom: any,categorie: any,statut: any,date1: any,date2: any,date3: any,photo: any,numero:any){
        
-        const result = await CreateUserService.NewUser(nom,categorie,statut,date1,date2,date3,photo)
+        const result = await CreateUserService.NewUser(nom,categorie,statut,date1,date2,date3,photo,numero)
         this.setUsers(result)
         console.log(result)
         return result

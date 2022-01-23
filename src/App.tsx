@@ -1,15 +1,19 @@
-import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
-import { Form } from "react-bootstrap";
-import Formulaire from "./Formulaire";
 import { Provider } from "mobx-react";
 import { appRootStore } from "./stores/root.store";
+import Liste from "./Liste";
+import Formulaire from "./Formulaire";
+import { BrowserRouter, HashRouter as Router, Route, Routes } from "react-router-dom";
 function App() {
   return (
     <div>
       <Provider {...appRootStore}>
-        <Formulaire />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Formulaire />} />
+          <Route path="liste" element={ <Liste />} />
+        </Routes>
+      </BrowserRouter>
       </Provider>
     </div>
   );

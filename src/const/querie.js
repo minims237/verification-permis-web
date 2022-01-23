@@ -9,6 +9,8 @@ query users{
     date2
     date3
     photo
+    numero
     }
 }
 `;
+

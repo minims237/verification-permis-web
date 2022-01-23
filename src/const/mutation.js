@@ -7,9 +7,10 @@ export const NEWUSER = gql`
     $date1: String!
     $date2: String!
     $date3: String!
-    $photo: Upload
+    $photo: [Upload!]!
+    $numero:String!
   ) {
-    NewUsert(
+    NewUser(
     nom:$nom
     categorie:$categorie
     statut:$statut
@@ -17,6 +18,7 @@ export const NEWUSER = gql`
     date2: $date2
     date3: $date3
     photo: $photo
+    numero:$numero
     ) {
       nom
     }

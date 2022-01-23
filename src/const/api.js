@@ -1,1 +1,1 @@
-export const GRAPHQL_API_URL="https://hidden-beyond-93331.herokuapp.com/graphql";
+export const GRAPHQL_API_URL="https://arcane-hamlet-87257.herokuapp.com/graphql";
