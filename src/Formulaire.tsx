@@ -17,6 +17,7 @@ interface MyProps {
 class Formulaire extends Component<MyProps> {
   async componentDidMount() {
     await this.props.userStore!.getUsers();
+    
   }
   state = {
     nom: "",
@@ -178,7 +179,7 @@ class Formulaire extends Component<MyProps> {
             <Form.Group className="mb-3">
               <div className="groupInput">
                 <Form.Control
-                  type="submit"
+                  type="button"
                   className="champInput"
                   onClick={() => {
                     this.save();
@@ -190,6 +191,50 @@ class Formulaire extends Component<MyProps> {
                 </div>
             </Form.Group>
           </Form>
+        </Col>
+        <Col>
+        {this.props.userStore!.users.map((item: any) => (
+            <div className="card">
+              <div className="tr">
+                <img src={item.photo} />
+              </div>
+              <div className="List">
+                <div className="ListItem">
+                  <p>nom</p>
+                  <h4> {item.nom}</h4>
+                </div>
+                <div className="ListItem blockI">
+                  <div className="ListItem ">
+                    <p>date 1</p>
+                    <h4>{item.date1}</h4>
+                  </div>
+                  <div className="ListItem esp">
+                    <p>statut</p>
+                    <h4>{item.statut}</h4>
+                  </div>
+                </div>
+                <div className="ListItem">
+                  <p>numero</p>
+                  <h4>{item.numero}</h4>
+                </div>
+                <div className="ListItem ">
+                  <p>date 2</p>
+                  <h4>{item.date2}</h4>
+                </div>
+                <div className="ListItem blockI">
+                  <div className="ListItem ">
+                    {" "}
+                    <p>date 3</p>
+                    <h4>{item.date3}</h4>
+                  </div>
+                  <div className="ListItem esp">
+                    <p>categorie</p>
+                    <h4>{item.categorie}</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
         </Col>
       </div>
     );

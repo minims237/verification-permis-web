@@ -96,7 +96,7 @@ class Liste extends Component<MyProps> {
               className="champInput"
             
               onClick={() => {
-                this.recherche()
+                this.search(this.state.search)
               }}
             >Recherche</Button>
           </div>
